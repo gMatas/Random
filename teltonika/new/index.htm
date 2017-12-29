@@ -1,0 +1,249 @@
+	function print_table(num)
+		if num == 1 then %>
+			<div style="width:456px;float:<%=sides()%>" id="system_table">
+				<fieldset class="cbi-section">
+				<legend style="width:446px;float:<%=side%>; height: 15px;"><span style="color: #404040;"><%=translate("System")%></span>
+				<span onmouseout="HideHint(this)" onmouseover="ShowHint(this, '<%=translate('Detailed information')%>')"style="color:rgb(64, 64, 64);"><a class="overview-mini-info_icon" href="<%=ds.build_url('/admin/status/sysinfo')%>"></a></span>
+				<span onmouseout="HideHint(this)" onmouseover="ShowHint(this, '<%=translate('Configuration')%>')"style="color:rgb(64, 64, 64);"><a class="overview-mini-settings_icon" href="<%=ds.build_url('/admin/services/ntpc')%>"></a></span>
+				<span style="float: right; position: relative; bottom: 10px; margin-right:10px;" id="loadavg"></span></legend>
+				</fieldset>
+				<table class="cbi-section-table" style="margin-top:10px;float:<%=side%>">
+				<tr><td width="33%"><span onmouseout="HideHint(this)" onmouseover="ShowHint(this, '<%=translate('Indicates how much time have passed since the last router start up. Format [days hours minutes seconds (since year-month-day, hours:minutes:seconds)]')%>')"</span><%=translate("Router uptime")%></td><td colspan="2" id="uptime">-</td></tr>
+				<tr><td width="33%"><span onmouseout="HideHint(this)" onmouseover="ShowHint(this, '<%=translate('Device\\\'s current system time. Format [year-month-day, hours:minutes:seconds]')%>')"</span><%=translate("Local device time")%></td><td colspan="2" id="localtime">-</td></tr>
+				<tr><td width="33%"><span onmouseout="HideHint(this)" onmouseover="ShowHint(this, '<%=translate('The amount of random access memory that is completely free')%>')"style="color:rgb(64, 64, 64);"><%=translate("Memory usage")%></span> </td><td id="memfree">-</td><td id="memflash">-</td></tr>
+				<tr style="border-bottom: 1px solid #DDD;"><td width="33%"><span onmouseout="HideHint(this)" onmouseover="ShowHint(this, '<%=translate('The version of the firmware that is currently loaded on the router')%>')"</span><%=translate("Firmware version")%></td><td colspan="2" id="fwver">-</td></tr>
+				</table>
+		</div>
+	<%
+	end
+
+		if num == 2 then %>
+			<div style="width:456px;float:<%=sides()%>" id="mobile_table">
+				<fieldset class="cbi-section">
+					<legend id="g3BarsShow" style="width:446px;float:<%=side%>; height: 15px;">
+						<span style="color: #404040;"><%=translate("Mobile")%></span>
+						<span onmouseout="HideHint(this)" onmouseover="ShowHint(this, '<%=translate('Detailed information')%>')"style="color:rgb(64, 64, 64);"><a class="overview-mini-info_icon" href="<%=ds.build_url('/admin/status/netinfo')%>"></a></span>
+						<span onmouseout="HideHint(this)" onmouseover="ShowHint(this, '<%=translate('Configuration')%>')"style="color:rgb(64, 64, 64);"><a class="overview-mini-settings_icon" href="<%=ds.build_url('/admin/network/mobile')%>"></a></span>
+						<div style="float:right; position: relative; bottom: 4px;">
+							<small id="3gStr"></small>
+							<img id="3gBar0" style="visibility: visible; margin-right:10px" onload="g3Load0()" src="<%=resource%>/icons/signal0.png" />
+						</div>
+					</legend>
+				</fieldset>
+				<table class="cbi-section-table" style="margin-top:10px;float:<%=side%>">
+					<tr><td width="33%"><span onmouseover="ShowHint(this, '<%=translate('Indicates how long a mobile connection is available for. Format [days hours minutes seconds (since year-month-day, hours:minutes:seconds)]')%>')" onmouseout="HideHint(this)"><%=translate("Data connection ")%></span> </td><td id="datacon">-</td></tr>
+					<tr><td width="33%"><span onmouseover="ShowHint(this, '<%=translate('Mobile data connection state; operator; type')%>')" onmouseout="HideHint(this)"><%=translate("State")%></span> </td><td id="operstate">-</td></tr>
+					<tr><td width="33%"><span onmouseover="ShowHint(this, '<%=translate('Which SIM card slot is in use and in what state it is, e.g. PIN required, Not inserted, etc')%>')" onmouseout="HideHint(this)"><%=translate("SIM card slot in use")%></span> </td><td id="simstate">-</td></tr>
+					<tr style="border-bottom: 1px solid #DDD;"><td width="33%"><span onmouseover="ShowHint(this, '<%=translate('Amount of bytes which were received/sent via mobile data connection')%>')" onmouseout="HideHint(this)"><%=translate("Bytes received/sent")%> *</span> </td><td id="databytes">-</td></tr>
+				</table>
+			</div>
+		<%end
+
+		if num == 3 then %>
+			<div style="width:456px;float:<%=sides()%>" id="limit_guard_table">
+				<fieldset class="cbi-section">
+				<legend style="width:446px;float:<%=side%>; height: 15px;"><span style="color: #404040;"><%=translate("Limit guard")%></span>
+                    <span onmouseout="HideHint(this)" onmouseover="ShowHint(this, '<%=translate('Configuration')%>')"style="color:rgb(64, 64, 64);"><a class="overview-mini-settings_icon" href="<%=ds.build_url('/admin/network/mobile/limit')%>"></a></span>
+                        <div style="float:right; position: relative; margin-right:10px; bottom: 0px;">
+							<small id="sim_used"></small>
+						</div>
+                    <span style="float: right; position: relative; bottom: 10px; margin-right:10px;" id="loadavg"></span></legend>
+				</fieldset>
+				<table class="cbi-section-table" style="margin-top:10px;float:<%=side%>">
+				<tr><td width="33%"><span onmouseout="HideHint(this)" onmouseover="ShowHint(this, '<%=translate('Indicates how much data is used and mobile data transfer limit')%>')"</span><%=translate("Data used/Data limit *")%></td><td id="conn_limit">-</td><td colspan="2" id="period">-</td></tr></tr>
+				<tr><td width="33%"><span onmouseout="HideHint(this)" onmouseover="ShowHint(this, '<%=translate('Mobile data limit SMS warning state')%>')"</span><%=translate("SMS Warning")%></td><td colspan="2" id="warning">-</td></tr>
+				</table>
+            </div>
+        <%
+        end
+
+		if num == 4 then %>
+			<div style="width:456px;float:<%=sides()%>" id="wireless_table">
+				<fieldset class="cbi-section">
+					<legend style="width:446px;float:<%=side%>; height: 15px;"><span style="color: #404040;"><%=translate("Wireless")%></span>
+						<span onmouseout="HideHint(this)" onmouseover="ShowHint(this, '<%=translate("Detailed information")%>')"style="color:rgb(64, 64, 64);"><a class="overview-mini-info_icon" href="<%=ds.build_url('/admin/status/netinfo/wireless/')%>"></a></span>
+						<span onmouseout="HideHint(this)" onmouseover="ShowHint(this, '<%=translate("Configuration")%>')"style="color:rgb(64, 64, 64);"><a class="overview-mini-settings_icon" href="<%=ds.build_url('/admin/network/wireless')%>"></a></span>
+						<div id="wifibar" style="float:right;">
+							<img style="visibility: visible; margin-right:10px" src="<%=resource%>/icons/wifi_disabled.png" />
+						</div>
+					</legend>
+				</fieldset>
+				<table class="cbi-section-table" style="margin-top:10px;float:<%=side%>">
+					<tr><td width="33%"><span onmouseover="ShowHint(this, '<%=translate('SSID (service set identifier) is an unique indentifier that identifies a wireless network')%>')" onmouseout="HideHint(this)"><%=translate("SSID")%></span> </td>  <td  id="wifiname">-</td></tr>
+					<tr style="border-bottom: 1px solid #DDD;"><td width="33%"><span onmouseover="ShowHint(this, '<%=translate('Specifies connection mode. It can either be Access Point (AP) or Client.')%>')" onmouseout="HideHint(this)"><%=translate("Mode")%></span> </td><td id="wifimode">-</td></tr>
+				</table>
+			</div>
+		<%end
+
+		if num == 5 then %>
+			<div style="width:456px;float:<%=sides()%>" id="wan_table">
+				<fieldset class="cbi-section">
+					<legend style="width:446px;float:<%=side%>; height: 15px;"><span style="color: #404040;"><%=translate("WAN")%></span>
+						<span onmouseout="HideHint(this)" onmouseover="ShowHint(this, '<%=translate("Detailed information")%>')"style="color:rgb(64, 64, 64);"><a class="overview-mini-info_icon" href="<%=ds.build_url('/admin/status/netinfo/wan/')%>"></a></span>
+						<span onmouseout="HideHint(this)" onmouseover="ShowHint(this, '<%=translate("Configuration")%>')"style="color:rgb(64, 64, 64);"><a class="overview-mini-settings_icon" href="<%=ds.build_url('/admin/network/wan')%>"></a></span>
+						<div id="wanbar" style="float:right;">
+						</div>
+					</legend>
+				</fieldset>
+				<table class="cbi-section-table" style="margin-top:10px;float:<%=side%>">
+					<tr><td width="33%"><span onmouseover="ShowHint(this, '<%=translate('Specifies an IP address that the router uses to connect to the Internet')%>')" onmouseout="HideHint(this)"><%=translate("IP address")%></span> </td><td id="wanip">-</td></tr>
+					<tr style="border-bottom: 1px solid #DDD;"><td width="33%"><span onmouseover="ShowHint(this, '<%=translate('Specifies if WAN (wide area network) backup link is enabled')%>')" onmouseout="HideHint(this)"><%=translate("Backup WAN status")%></span> </td><td id="backupwan">-</td></tr>
+				</table>
+			</div>
+		<%end
+
+		if num == 6 then %>
+			<div style="width:456px;float:<%=sides()%>" id="local_network_table">
+				<fieldset class="cbi-section">
+					<legend style="width:446px;float:<%=side%>; height: 15px;"><span style="color: #404040;"><%=translate("Local Network")%></span>
+					<span onmouseout="HideHint(this)" onmouseover="ShowHint(this, '<%=translate("Detailed information")%>')"style="color:rgb(64, 64, 64);"><a class="overview-mini-info_icon" href="<%=ds.build_url('/admin/status/netinfo/lan/')%>"></a></span>
+					<span onmouseout="HideHint(this)" onmouseover="ShowHint(this, '<%=translate("Configuration")%>')"style="color:rgb(64, 64, 64);"><a class="overview-mini-settings_icon" href="<%=ds.build_url('/admin/network/lan')%>"></a></span>
+					</legend>
+				</fieldset>
+				<table class="cbi-section-table" style="margin-top:10px;float:<%=side%>">
+					<tr><td width="33%"><span onmouseover="ShowHint(this, '<%=translate('')%>')" onmouseout="HideHint(this)"><%=translate("IP / netmask")%></span> </td>  <td  id="lan_address">-</td></tr>
+					<tr style="border-bottom: 1px solid #DDD;"><td width="33%"><span onmouseover="ShowHint(this, '<%=translate('')%>')" onmouseout="HideHint(this)"><%=translate("Clients connected")%></span> </td><td id="connected_clients">-</td></tr>
+				</table>
+			</div>
+		<%end
+
+		if num == 7 then %>
+			<div style="width:456px;float:<%=sides()%>" id="access_control_table">
+				<fieldset class="cbi-section">
+					<legend style="width:446px;float:<%=side%>; height: 15px;"><span style="color: #404040;"><%=translate("Access Control")%></span>
+					<span onmouseout="HideHint(this)" onmouseover="ShowHint(this, '<%=translate('Detailed information')%>')"style="color:rgb(64, 64, 64);"><a class="overview-mini-info_icon" href="<%=ds.build_url('/admin/status/netinfo/access/')%>"></a></span>
+					<span onmouseout="HideHint(this)" onmouseover="ShowHint(this, '<%=translate('Configuration')%>')"style="color:rgb(64, 64, 64);"><a class="overview-mini-settings_icon" href="<%=ds.build_url('/admin/system/admin/access_control/')%>"></a></span>
+					</legend>
+				</fieldset>
+				<table class="cbi-section-table" style="margin-top:10px;float:<%=side%>">
+					<tr><td width="33%"><span onmouseover="ShowHint(this, '<%=translate('')%>')" onmouseout="HideHint(this)"><%=translate("LAN")%></span> </td><td id="lan_allowed">-</td></tr>
+					<tr style="border-bottom: 1px solid #DDD;"><td width="33%"><span onmouseover="ShowHint(this, '<%=translate('')%>')" onmouseout="HideHint(this)"><%=translate("WAN")%></span> </td><td id="wan_allowed">-</td></tr>
+				</table>
+			</div>
+		<%end
+
+		if num == 8 then %>
+			<div style="width:456px;float:<%=sides()%>" id="system_events_table">
+				<fieldset class="cbi-section">
+					<legend style="width:446px;float:<%=side%>;"><span style="color: #404040;"><%=translate("Recent System Events")%></span>
+						<span onmouseout="HideHint(this)" onmouseover="ShowHint(this, '<%=translate('Detailed information')%>')"style="color:rgb(64, 64, 64);"><a class="overview-mini-info_icon" href="<%=ds.build_url('/admin/status/event/log/')%>"></a></span>
+						<span onmouseout="HideHint(this)" onmouseover="ShowHint(this, '<%=translate('Configuration')%>')"style="color:rgb(64, 64, 64);"><a class="overview-mini-settings_icon" href="<%=ds.build_url('/admin/status/event/report/')%>"></a></span>
+					</legend>
+				</fieldset>
+				<table class="cbi-section-table" style="margin-top:10px;float:<%=side%>">
+					<tr><td width="5%"><span >1</span> </td><td id="e0"></td></tr>
+					<tr><td width="5%"><span >2</span> </td><td id="e1"></td></tr>
+					<tr><td width="5%"><span >3</span> </td><td id="e2"></td></tr>
+					<tr><td width="5%"><span >4</span> </td><td id="e3"></td></tr>
+				</table>
+			</div>
+		<%end
+
+		if num == 9 then %>
+			<div style="width:456px;float:<%=sides()%>" id="network_events_table">
+				<fieldset class="cbi-section">
+					<legend style="width:446px;float:<%=side%>;"><span style="color: #404040;"><%=translate("Recent Network Events")%></span>
+						<span onmouseout="HideHint(this)" onmouseover="ShowHint(this, \'<%=translate("Detailed information")%>\')"style="color:rgb(64, 64, 64);"><a class="overview-mini-info_icon" href="<%=ds.build_url('/admin/status/event/connect/')%>"></a></span>
+						<span onmouseout="HideHint(this)" onmouseover="ShowHint(this, \'<%=translate("Configuration")%>\')"style="color:rgb(64, 64, 64);"><a class="overview-mini-settings_icon" href="<%=ds.build_url('/admin/status/event/report/')%>"></a></span>
+					</legend>
+				</fieldset>
+				<table class="cbi-section-table" style="margin-top:10px;float:left">
+					<tr><td width="5%"><span >1</span> </td><td id="n0"></td></tr>
+					<tr><td width="5%"><span >2</span> </td><td id="n1"></td></tr>
+					<tr><td width="5%"><span >3</span> </td><td id="n2"></td></tr>
+					<tr><td width="5%"><span >4</span> </td><td id="n3"></td></tr>
+				</table>
+			</div>
+		<%end
+		if num == 10 then %>
+			<div style="width:456px;float:<%=sides()%>" id="sms_counter_table">
+				<fieldset class="cbi-section">
+					<legend style="width:446px;float:<%=side%>;"><span style="color: #404040;"><%=translate("SMS Counter")%></span>
+						<span onmouseout="HideHint(this)" onmouseover="ShowHint(this, \'<%=translate("Configuration")%>\')"style="color:rgb(64, 64, 64);"> &nbsp<a class="overview-mini-settings_icon" href="<%=ds.build_url('/admin/services/sms_gateway/sms_counter/')%>"></a></span>
+					</legend>
+				</fieldset>
+				<table class="cbi-section-table" style="margin-top:10px;float:left">
+					<tr><td width=""><span >SIM 1</span> <td id="">Sms sent</td><td id="sms_send1">-</td><td id="">Sms received</td><td id="sms_recieved1">-</td></tr>
+					<tr><td width=""><span >SIM 2</span> <td id="">Sms sent</td><td id="sms_send2">-</td><td id="">Sms received</td><td id="sms_recieved2">-</td></tr>
+				</table>
+			</div>
+		<%end
+		if num == 11 then
+			vpn_counter = vpn_counter +1%>
+			<div style="width:456px;float:<%=sides()%>" id="open_vpn_table<%=vpn_counter%>">
+				<fieldset class="cbi-section">
+					<legend style="width:446px;float:<%=side%>;"><span style="color: #404040;"><%=translate(open_vpn_names[vpn_counter].." VPN")%></span>
+						<span onmouseout="HideHint(this)" onmouseover="ShowHint(this, \'<%=translate("Detailed information")%>\')"style="color:rgb(64, 64, 64);"><a class="overview-mini-info_icon" href="<%=ds.build_url('/admin/status/netinfo/openvpn/'..open_vpn_names[vpn_counter])%>"></a></span>
+						<span onmouseout="HideHint(this)" onmouseover="ShowHint(this, \'<%=translate("Configuration")%>\')"style="color:rgb(64, 64, 64);"><a class="overview-mini-settings_icon" href="<%=ds.build_url('/admin/services/vpn/cbasic/'..open_vpn_names[vpn_counter])%>"></a></span>
+					</legend>
+				</fieldset>
+				<table class="cbi-section-table" style="margin-top:10px;float:left">
+					<tr><td width="33%"><span >Status</span> <td id="vpn_status<%=vpn_counter%>">-</td></tr>
+					<tr><td width="33%"><span >Type</span> <td id="vpn_type<%=vpn_counter%>">-</td></tr>
+				</table>
+			</div>
+		<%end
+		if num == 12 then
+			hotspot_counter = hotspot_counter +1%>
+			<div style="width:456px;float:<%=sides()%>" id="hotspot_table<%=hotspot_counter%>">
+				<fieldset class="cbi-section">
+					<legend style="width:446px;float:<%=side%>;"><span style="color: #404040;"><%=translate(hotspots_ssid[hotspot_counter].." Hotspot")%></span>
+						<span onmouseout="HideHint(this)" onmouseover="ShowHint(this, \'<%=translate("Detailed information")%>\')"style="color:rgb(64, 64, 64);"><a class="overview-mini-info_icon" href="<%=ds.build_url('admin/services/hotspot/general/clients/'..show_hotspots[hotspot_counter])%>"></a></span>
+						<span onmouseout="HideHint(this)" onmouseover="ShowHint(this, \'<%=translate("Configuration")%>\')"style="color:rgb(64, 64, 64);"><a class="overview-mini-settings_icon" href="<%=ds.build_url('admin/services/hotspot/general/'..show_hotspots[hotspot_counter])%>"></a></span>
+					</legend>
+				</fieldset>
+				<table class="cbi-section-table" style="margin-top:10px;float:left">
+					<tr><td width="33%"><span >Status</span> <td id="hotspot_status<%=hotspot_counter%>">-</td></tr>
+					<tr><td width="33%"><span >Bytes received/sent</span> <td id="hotspot_data<%=hotspot_counter%>">-</td></tr>
+				</table>
+			</div>
+		<%end
+		if num == 13 then%>
+			<div style="width:456px;float:<%=sides()%>" id="vrrp">
+				<fieldset class="cbi-section">
+					<legend style="width:446px;float:<%=side%>;"><span style="color: #404040;"><%=translate("VRRP")%></span>
+						<span onmouseout="HideHint(this)" onmouseover="ShowHint(this, \'<%=translate("Detailed information")%>\')"style="color:rgb(64, 64, 64);"><a class="overview-mini-info_icon" href="<%=ds.build_url('admin/status/netinfo/vrrp/')%>"></a></span>
+						<span onmouseout="HideHint(this)" onmouseover="ShowHint(this, \'<%=translate("Configuration")%>\')"style="color:rgb(64, 64, 64);"><a class="overview-mini-settings_icon" href="<%=ds.build_url('admin/services/vrrp')%>"></a></span>
+					</legend>
+				</fieldset>
+				<table class="cbi-section-table" style="margin-top:10px;float:left">
+					<tr><td width="33%"><span >Status</span> <td id="vrrp_status">-</td></tr>
+					<tr><td width="33%"><span >Virtual IP</span> <td id="vrrp_ip">-</td></tr>
+				</table>
+			</div>
+		<%end
+		if num == 14 then%>
+			<div style="width:456px;float:<%=sides()%>" id="monitoring_table">
+				 <fieldset class="cbi-section">
+				 	<legend style="width:446px;float:<%=side%>;"><span style="color: #404040;"><%=translate("Monitoring")%></span>
+				 	<span onmouseout="HideHint(this)" onmouseover="ShowHint(this, \'<%=translate("Detailed information")%>\')"style="color:rgb(64, 64, 64);"><a class="overview-mini-info_icon" href="<%=ds.build_url('admin/system/admin/monitoring/')%>"></a></span>
+				 		<span onmouseout="HideHint(this)" onmouseover="ShowHint(this, \'<%=translate("Configuration")%>\')"style="color:rgb(64, 64, 64);"><a class="overview-mini-settings_icon" href="<%=ds.build_url('admin/system/admin/monitoring/')%>"></a></span>
+				 	</legend>
+				 </fieldset>
+				 <table class="cbi-section-table" style="margin-top:10px;float:left">
+				 	<tr><td width="33%"><span >Status</span> <td id="monitoring_status">-</td></tr>
+				 	<tr><td width="33%"><span >Connection State</span> <td id="monitoring_router_status">-</td></tr>
+				 </table>
+			</div>
+		<%end
+		if num == 15 then%>
+			<div style="width:456px;float:<%=sides()%>" id="wimax_table">
+				<fieldset class="cbi-section">
+					<legend id="g3BarsShow" style="width:446px;float:<%=side%>; height: 15px;">
+						<span style="color: #404040;"><%=translate("WiMAX")%></span>
+						<span onmouseout="HideHint(this)" onmouseover="ShowHint(this, \'<%=translate("Detailed information")%>\')"style="color:rgb(64, 64, 64);"><a class="overview-mini-info_icon" href="<%=ds.build_url('admin/status/netinfo/wimax/')%>"></a></span>
+						<span onmouseout="HideHint(this)" onmouseover="ShowHint(this, \'<%=translate("Configuration")%>\')"style="color:rgb(64, 64, 64);"><a class="overview-mini-settings_icon" href="<%='http://' .. ip_address .. ':' .. wimax_port%>" target="_blank"></a></span>
+						<div style="float:right; position: relative; bottom: 4px;">
+							<a href="<%=ds.build_url('admin/system/admin/wimax/')%>" id="Wlink" class="wimaxErrorLink" style="display:none;"> <%=translate('Invalid WiMAX password. Click here to change it')%>&#160; </a>
+							<small id="WStr"></small>
+							<img id="WBar0" style="visibility: visible; margin-right:10px" onload="g3Load0()" src="<%=resource%>/icons/signal0.png" />
+						</div>
+					</legend>
+				</fieldset>
+				<table class="cbi-section-table" style="margin-top:10px;float:left">
+					<tr><td width="33%"><span onmouseover="ShowHint(this, '<%=translate('Specifies an IP address that the router uses to connect to the Internet')%>')" onmouseout="HideHint(this)"><%=translate("Data connection state")%></span> </td><td id="wimax_state">-</td></tr>
+					<tr style="border-bottom: 1px solid #DDD;"><td width="33%"><span onmouseover="ShowHint(this, '<%=translate('Specifies if WAN (wide area network) backup link is enabled')%>')" onmouseout="HideHint(this)"><%=translate("Data connection uptime")%></span> </td><td id="wimax_uptime">-</td></tr>
+					<tr><td width="33%"><span onmouseover="ShowHint(this, '<%=translate('Specifies an IP address that the router uses to connect to the Internet')%>')" onmouseout="HideHint(this)"><%=translate("Signal quality")%></span> </td><td id="wimax_sigqual">-</td></tr>
+					<tr style="border-bottom: 1px solid #DDD;"><td width="33%"><span onmouseover="ShowHint(this, '<%=translate('Specifies if WAN (wide area network) backup link is enabled')%>')" onmouseout="HideHint(this)"><%=translate("MAC address")%></span> </td><td id="wimax_mac">-</td></tr>
+				</table>
+			</div>

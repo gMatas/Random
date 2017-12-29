@@ -1,0 +1,40 @@
+<fieldset class="cbi-section" >
+	<div class="applyChanges" id="applyConnection" style="display: none;">
+		<span id="cbi-apply-system-status"><%=translate("Rebooting...")%></span>
+		<img src="/luci-static/resources/icons/loading.gif" alt="Loading">
+	</div>
+	<h2><a id="content" name="content"><%=translate("WiMAX Information")%></a></h2>
+</fieldset>
+<fieldset class="cbi-section" >
+	<div id="g3BarsShow" class="overlayParent">
+		<div class="overlayLegend" style="height: 18px;">
+			
+			<div style="float: left; margin-top: 10px; ">
+				<%=translate("WiMAX")%>&#160;
+				<span onmouseout="HideHint(this)" onmouseover="ShowHint(this, \'<%=translate("Configuration")%>\')"style="color:rgb(64, 64, 64);"><a class="overview-mini-settings_icon" href="<%='http://' .. ip_address .. ':' .. wimax_port%>" target="_blank"></a></span>
+			</div>
+			<div style="float: right;">
+				<img id="wimaxBar0" style="visibility: visible; height: 23px; float:none; margin-right: 10px;"  onload="wimaxLoad0()" src="<%=resource%>/icons/signal0.png" />
+			</div>
+			<div style="margin-top: 10px; float: right;" >
+				<a id="ShowError" style="display: none;" href="<%=ds.build_url('admin/system/admin/wimax/')%>" class="wimaxErrorLink"> <%=translate('Invalid WiMAX user password. Please click here to navigate to relevant configuration page')%>&#160; </a>
+			</div>
+		</div>
+	<table width="100%" cellspacing="10">
+		<tr><td width="33%"><%=translate("Uptime")%></td><td                id="wTime"><%: - %>            </td></tr>
+		<tr><td width="33%"><%=translate("State")%></td><td                 id="wState"><%: - %>           </td></tr>
+		<tr><td width="33%"><%=translate("Singal Strength")%></td><td       id="wSigstr"><%: -  %></td></tr>
+		<tr><td width="33%"><%=translate("Signal Quality")%></td><td        id="wSigqual"><%: - %></td></tr>
+		<tr><td width="33%"><%=translate("IPv4 address")%></td><td          id="wIp"><%: -  %></td></tr>
+		<tr><td width="33%"><%=translate("MAC address")%></td><td           id="wMac"><%: -  %></td></tr>
+		<tr><td width="33%"><%=translate("BS MAC address")%></td><td        id="wBSMac"><%: - %></td></tr>
+		<tr><td width="33%"><%=translate("Uplink Modulation")%></td><td     id="wUpMod"><%: -  %></td></tr>
+		<tr><td width="33%"><%=translate("Downlink Modulation")%></td><td   id="wDownMod"><%: -  %></td></tr>
+		<tr><td width="33%"><%=translate("Version")%></td><td               id="wVer"><%: -  %></td></tr>
+	</table>
+</fieldset>
+
+<fieldset class="cbi-section">
+	<button id="refresh" class="cbi-button-refresh"  style="float: right;" disabled onClick="refreshPage()"><%=translate("Refresh")%></button>
+	<button id="reboot_wimax" class="cbi-button-refresh"  style="float: left;" onClick="reboot_wimax()"><%=translate("Reboot WiMAX modem")%></button>
+</fieldset>
